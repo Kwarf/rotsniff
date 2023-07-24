@@ -24,6 +24,15 @@ Options:
   -V, --version              Print version
 ```
 
+## Installing
+
+You can install the latest tagged version directly from [crates.io](https://crates.io/crates/rotsniff) by running the
+following command.
+
+```
+cargo install rotsniff
+```
+
 ## Examples
 
 ```
