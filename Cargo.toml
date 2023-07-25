@@ -1,6 +1,6 @@
 [package]
 name = "rotsniff"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Jimmy Bergström <me@kwarf.com>"]
 edition = "2021"
 description = "A tool to catalog files and their hashes in order to detect corrupted or missing files."
