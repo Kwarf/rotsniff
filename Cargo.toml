@@ -1,6 +1,6 @@
 [package]
 name = "rotsniff"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Jimmy Bergström <me@kwarf.com>"]
 edition = "2021"
 description = "A tool to catalog files and their hashes in order to detect corrupted or missing files."
@@ -13,9 +13,9 @@ categories = ["command-line-utilities"]
 blake2 = "0.10"
 clap = { version = "4.3", features = ["derive"] }
 csv = "1.2"
+digest = "0.10.7"
 flate2 = "1.0.26"
 hex = "0.4"
-memmap2 = "0.7"
 rayon = "1.7"
 regex = "1.9"
 serde = { version = "1.0", features = ["derive"] }

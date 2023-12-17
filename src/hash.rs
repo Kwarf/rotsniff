@@ -1,7 +1,12 @@
-use std::{fmt::Display, fs::File, io, path::Path};
+use std::{
+    fmt::Display,
+    fs::File,
+    io::{self, BufReader, Read},
+    path::Path,
+};
 
 use blake2::{digest::generic_array::GenericArray, Blake2b512, Digest};
-use memmap2::Mmap;
+use digest::crypto_common::BlockSizeUser;
 use regex::Regex;
 use serde::{
     de::{self, Visitor},
@@ -10,10 +15,16 @@ use serde::{
 
 pub fn blake2s(path: impl AsRef<Path>) -> Result<Hash, io::Error> {
     let file = File::open(path)?;
-    let mmap = unsafe { Mmap::map(&file)? };
+    let mut reader = BufReader::new(file);
     let mut hasher = Blake2b512::new();
-    hasher.update(mmap);
-    Ok(Hash::Blake2b512(hasher.finalize()))
+    let mut buffer = vec![0u8; Blake2b512::block_size()];
+    loop {
+        match reader.read(&mut buffer) {
+            Ok(0) => break Ok(Hash::Blake2b512(hasher.finalize())),
+            Ok(n) => hasher.update(&buffer[..n]),
+            Err(err) => break Err(err),
+        }
+    }
 }
 
 #[derive(Clone, Debug, PartialEq)]
